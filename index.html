@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NUCLEAR CYBER CIRCUS ☢️</title>
+    <title>NEON CYBER CIRCUS: NUCLEAR DODGE ☢️</title>
     <style>
         /* Cyber Nuclear Theme */
         body {
@@ -16,13 +16,46 @@
             text-align: center;
         }
 
+        /* 🚀 Contract Address Banner */
+        #contract-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+        #contract-address {
+            color: #00f0ff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        #contract-address:hover {
+            text-shadow: 0 0 10px #00f0ff;
+        }
+        .buy-button {
+            margin-left: 15px;
+            padding: 5px 10px;
+            background: #ff00ff;
+            color: #000;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
         #game-container {
             position: relative;
             width: 100vw;
             height: 100vh;
             background: 
                 linear-gradient(135deg, #1a0033 0%, #0a0a20 100%),
-                url('https://i.imgur.com/JQl5q7T.png') center/cover; /* 🚨 NEW: Nuclear factory BG */
+                url('https://i.imgur.com/JQl5q7T.png') center/cover;
         }
 
         #player {
@@ -31,7 +64,7 @@
             height: 80px;
             background: 
                 radial-gradient(circle, #ff00ff 0%, #00f0ff 70%, transparent 90%),
-                url('https://i.imgur.com/XW7yGJn.png') center/contain no-repeat; /* 🚨 NEW: Clown sprite */
+                url('https://i.imgur.com/XW7yGJn.png') center/contain no-repeat;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
@@ -44,12 +77,11 @@
             height: 60px;
             background: 
                 linear-gradient(to bottom, #ff3300, #ff9900),
-                url('https://i.imgur.com/9zH5wKp.png') center/contain no-repeat; /* 🚨 NEW: Missile sprite */
+                url('https://i.imgur.com/9zH5wKp.png') center/contain no-repeat;
             transform: rotate(180deg);
             filter: drop-shadow(0 0 10px #ff3300);
         }
 
-        /* 🚨 NEW: Missile fire trail */
         .missile::after {
             content: "";
             position: absolute;
@@ -69,7 +101,7 @@
 
         #score {
             position: absolute;
-            top: 20px;
+            top: 60px;
             left: 20px;
             font-size: 1.5rem;
             color: #00f0ff;
@@ -78,8 +110,8 @@
 
         #radiation {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 100px;
+            left: 20px;
             font-size: 1.5rem;
             color: #fff000;
             text-shadow: 0 0 10px #fff000;
@@ -90,11 +122,26 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 3rem;
+            font-size: 2rem;
             color: #ff00ff;
             text-shadow: 0 0 15px #ff00ff;
             display: none;
             z-index: 10;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        #game-over code {
+            display: block;
+            margin: 1rem auto;
+            padding: 0.5rem;
+            background: #111;
+            color: #00f0ff;
+            cursor: pointer;
+            border-radius: 5px;
         }
 
         #restart {
@@ -108,7 +155,6 @@
             box-shadow: 0 0 20px #00f0ff;
         }
 
-        /* 🚨 NEW: Nuclear explosion VFX */
         .explosion {
             position: absolute;
             width: 200px;
@@ -125,17 +171,51 @@
             0% { transform: scale(0); opacity: 0.8; }
             100% { transform: scale(3); opacity: 0; }
         }
+
+        /* Mobile Footer */
+        #mobile-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to right, #ff00ff, #00f0ff);
+            padding: 10px;
+            text-align: center;
+            display: none;
+            z-index: 50;
+        }
+        @media (max-width: 768px) {
+            #mobile-footer { display: block; }
+        }
     </style>
 </head>
 <body>
+    <!-- Contract Address Banner -->
+    <div id="contract-banner">
+        <span>CONTRACT: <code id="contract-address">0xYOUR_CONTRACT_ADDRESS</code></span>
+        <a href="https://pump.fun" target="_blank" class="buy-button">BUY $NEONCIRCUS</a>
+    </div>
+
+    <!-- Game Container -->
     <div id="game-container">
         <div id="score">SCORE: 0</div>
         <div id="radiation">RADIATION: 1x</div>
         <div id="player"></div>
+        
+        <!-- Game Over Screen -->
         <div id="game-over">
             MELTDOWN!<br>
+            <small>Fuel your next run with $NEONCIRCUS:</small>
+            <code id="contract-address-popup">0xYOUR_CONTRACT_ADDRESS</code>
+            <a href="https://pump.fun" target="_blank" class="buy-button" style="display: block; margin: 1rem auto;">BUY NOW</a>
             <button id="restart">TRY AGAIN</button>
         </div>
+    </div>
+
+    <!-- Mobile Footer -->
+    <div id="mobile-footer">
+        <div>🚀 <code style="color:#000;">0xYOUR...ADDRESS</code></div>
+        <a href="https://pump.fun" target="_blank" style="color:#000; font-weight:bold;">PUMP IT</a>
     </div>
 
     <!-- Audio -->
@@ -156,6 +236,7 @@
         const restartButton = document.getElementById('restart');
         const bgMusic = document.getElementById('background-music');
         const explosionSound = document.getElementById('explosion-sound');
+        const contractAddressElements = document.querySelectorAll('#contract-address, #contract-address-popup');
 
         let score = 0;
         let radiation = 1;
@@ -163,6 +244,22 @@
         let isGameOver = false;
         let missiles = [];
         let playerX = 50;
+
+        // Set contract address (replace with yours)
+        const CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS";
+        contractAddressElements.forEach(el => {
+            el.textContent = CONTRACT_ADDRESS;
+        });
+
+        // Copy-to-clipboard functionality
+        contractAddressElements.forEach(el => {
+            el.addEventListener('click', () => {
+                navigator.clipboard.writeText(CONTRACT_ADDRESS);
+                const originalText = el.textContent;
+                el.textContent = "COPIED!";
+                setTimeout(() => el.textContent = originalText, 2000);
+            });
+        });
 
         // Start music on first interaction
         document.addEventListener('click', () => {
@@ -228,7 +325,6 @@
             requestAnimationFrame(update);
         }
 
-        // 🚨 NEW: Spawn missiles with random trajectories
         function spawnMissile() {
             const missile = document.createElement('div');
             missile.className = 'missile';
@@ -238,7 +334,6 @@
             missiles.push(missile);
         }
 
-        // 🚨 NEW: Nuclear explosion effect
         function createExplosion(x, y) {
             const explosion = document.createElement('div');
             explosion.className = 'explosion';
@@ -248,14 +343,12 @@
             setTimeout(() => explosion.remove(), 1000);
         }
 
-        // End Game
         function endGame() {
             isGameOver = true;
             gameOverDisplay.style.display = 'block';
             bgMusic.pause();
         }
 
-        // Restart Game
         restartButton.addEventListener('click', () => {
             missiles.forEach(missile => missile.remove());
             missiles = [];
