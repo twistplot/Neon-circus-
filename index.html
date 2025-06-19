@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEON CYBER CIRCUS GAME 🎪</title>
+    <style>
+        /* Cyber Neon Theme */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0a0a20;
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            text-align: center;
+        }
+
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a0033 0%, #0a0a20 100%);
+        }
+
+        #player {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #ff00ff, #00f0ff);
+            border-radius: 50%;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        .obstacle {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #fff000, #ff00ff);
+            border-radius: 10px;
+            box-shadow: 0 0 15px #fff000;
+        }
+
+        #score {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5rem;
+            color: #00f0ff;
+            text-shadow: 0 0 10px #00f0ff;
+        }
+
+        #game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #ff00ff;
+            text-shadow: 0 0 15px #ff00ff;
+            display: none;
+        }
+
+        #restart {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            font-family: 'Orbitron', sans-serif;
+            background: #00f0ff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px #00f0ff;
+        }
+
+        /* 🚨 NEW: Music toggle button */
+        #music-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #fff000;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="score">SCORE: 0</div>
+        <button id="music-toggle">🔊</button> <!-- 🚨 NEW: Music toggle -->
+        <div id="player"></div>
+        <div id="game-over">
+            GAME OVER!<br>
+            <button id="restart">PLAY AGAIN</button>
+        </div>
+    </div>
+
+    <!-- 🚨 NEW: Audio elements -->
+    <audio id="background-music" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-circus-show-theme-280.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="collision-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-explosion-2759.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="score-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Game Variables
+        const player = document.getElementById('player');
+        const gameContainer = document.getElementById('game-container');
+        const scoreDisplay = document.getElementById('score');
+        const gameOverDisplay = document.getElementById('game-over');
+        const restartButton = document.getElementById('restart');
+        const musicToggle = document.getElementById('music-toggle'); // 🚨 NEW
+
+        // 🚨 NEW: Audio elements
+        const bgMusic = document.getElementById('background-music');
+        const collisionSound = document.getElementById('collision-sound');
+        const scoreSound = document.getElementById('score-sound');
+
+        let score = 0;
+        let gameSpeed = 2;
+        let isGameOver = false;
+        let obstacles = [];
+        let playerX = 50;
+        let keys = {};
+        let isMusicOn = false; // 🚨 NEW
+
+        // 🚨 NEW: Toggle music
+        musicToggle.addEventListener('click', () => {
+            isMusicOn = !isMusicOn;
+            musicToggle.textContent = isMusicOn ? "🔊" : "🔇";
+            if (isMusicOn) {
+                bgMusic.play();
+            } else {
+                bgMusic.pause();
+            }
+        });
+
+        // Player Movement
+        document.addEventListener('keydown', (e) => {
+            keys[e.key] = true;
+        });
+
+        document.addEventListener('keyup', (e) => {
+            keys[e.key] = false;
+        });
+
+        // Touch Controls (Mobile)
+        gameContainer.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touchX = e.touches[0].clientX;
+            playerX = (touchX / window.innerWidth) * 100;
+            player.style.left = `${playerX}%`;
+        });
+
+        // Game Loop
+        function update() {
+            if (isGameOver) return;
+
+            // Move Player (Keyboard)
+            if (keys['ArrowLeft'] && playerX > 0) {
+                playerX -= 3;
+            }
+            if (keys['ArrowRight'] && playerX < 100) {
+                playerX += 3;
+            }
+            player.style.left = `${playerX}%`;
+
+            // Spawn Obstacles
+            if (Math.random() < 0.02) {
+                createObstacle();
+            }
+
+            // Move Obstacles
+            obstacles.forEach((obstacle, index) => {
+                const obstacleTop = parseFloat(obstacle.style.top) + gameSpeed;
+                obstacle.style.top = `${obstacleTop}px`;
+
+                // Collision Check
+                if (
+                    obstacleTop + 40 > window.innerHeight - 80 &&
+                    obstacleTop < window.innerHeight - 20 &&
+                    Math.abs(parseFloat(obstacle.style.left) - playerX) < 5
+                ) {
+                    collisionSound.play(); // 🚨 NEW: Play collision sound
+                    endGame();
+                }
+
+                // Remove if off-screen
+                if (obstacleTop > window.innerHeight) {
+                    obstacle.remove();
+                    obstacles.splice(index, 1);
+                    score++;
+                    scoreSound.play(); // 🚨 NEW: Play score sound
+                    scoreDisplay.textContent = `SCORE: ${score}`;
+                    if (score % 5 === 0) gameSpeed += 0.5;
+                }
+            });
+
+            requestAnimationFrame(update);
+        }
+
+        // Create Obstacle
+        function createObstacle() {
+            const obstacle = document.createElement('div');
+            obstacle.className = 'obstacle';
+            obstacle.style.left = `${Math.random() * 90}%`;
+            obstacle.style.top = '0px';
+            gameContainer.appendChild(obstacle);
+            obstacles.push(obstacle);
+        }
+
+        // End Game
+        function endGame() {
+            isGameOver = true;
+            gameOverDisplay.style.display = 'block';
+            player.style.backgroundColor = '#ff0000';
+            bgMusic.pause(); // 🚨 NEW: Stop music on game over
+        }
+
+        // Restart Game
+        restartButton.addEventListener('click', () => {
+            obstacles.forEach(obstacle => obstacle.remove());
+            obstacles = [];
+            score = 0;
+            gameSpeed = 2;
+            isGameOver = false;
+            playerX = 50;
+            player.style.left = '50%';
+            player.style.backgroundColor = 'radial-gradient(circle, #ff00ff, #00f0ff)';
+            gameOverDisplay.style.display = 'none';
+            scoreDisplay.textContent = 'SCORE: 0';
+            if (isMusicOn) bgMusic.play(); // 🚨 NEW: Resume music if enabled
+            update();
+        });
+
+        // Start Game
+        update();
+    </script>
+</body>
+</html>
