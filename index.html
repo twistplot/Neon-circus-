@@ -1,373 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEON CYBER CIRCUS: NUCLEAR DODGE ☢️</title>
-    <style>
-        /* Cyber Nuclear Theme */
-        body {
-            margin: 0;
-            padding: 0;
-            background: #0a0a20;
-            overflow: hidden;
-            font-family: 'Orbitron', sans-serif;
-            color: #fff;
-            text-align: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NEON CYBER CIRCUS: NUCLEAR DODGE ☢️</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0a0a20;
+      overflow: hidden;
+      font-family: 'Orbitron', sans-serif;
+      color: #fff;
+      text-align: center;
+    }
 
-        /* 🚀 Contract Address Banner */
-        #contract-banner {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            font-family: 'Orbitron', sans-serif;
-            z-index: 100;
-            backdrop-filter: blur(5px);
-        }
-        #contract-address {
-            color: #00f0ff;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        #contract-address:hover {
-            text-shadow: 0 0 10px #00f0ff;
-        }
-        .buy-button {
-            margin-left: 15px;
-            padding: 5px 10px;
-            background: #ff00ff;
-            color: #000;
-            text-decoration: none;
-            border-radius: 3px;
-            font-weight: bold;
-        }
+    #contract-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+    }
 
-        #game-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            background: 
-                linear-gradient(135deg, #1a0033 0%, #0a0a20 100%),
-                url('https://i.imgur.com/JQl5q7T.png') center/cover;
-        }
+    #contract-address {
+      color: #00f0ff;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
 
-        #player {
-            position: absolute;
-            width: 50px;
-            height: 80px;
-            background: 
-                radial-gradient(circle, #ff00ff 0%, #00f0ff 70%, transparent 90%),
-                url('https://i.imgur.com/XW7yGJn.png') center/contain no-repeat;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            filter: drop-shadow(0 0 15px #ff00ff);
-        }
+    #contract-address:hover {
+      text-shadow: 0 0 10px #00f0ff;
+    }
 
-        .missile {
-            position: absolute;
-            width: 30px;
-            height: 60px;
-            background: 
-                linear-gradient(to bottom, #ff3300, #ff9900),
-                url('https://i.imgur.com/9zH5wKp.png') center/contain no-repeat;
-            transform: rotate(180deg);
-            filter: drop-shadow(0 0 10px #ff3300);
-        }
+    .buy-button {
+      margin-left: 15px;
+      padding: 5px 10px;
+      background: #ff00ff;
+      color: #000;
+      text-decoration: none;
+      border-radius: 3px;
+      font-weight: bold;
+    }
 
-        .missile::after {
-            content: "";
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 10px;
-            height: 20px;
-            background: radial-gradient(ellipse, #fff000, #ff3300 70%, transparent 90%);
-            animation: flicker 0.1s infinite alternate;
-        }
+    #game-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background:
+        linear-gradient(135deg, #1a0033 0%, #0a0a20 100%),
+        url('https://i.imgur.com/JQl5q7T.png') center/cover;
+    }
 
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
+    #player {
+      position: absolute;
+      width: 50px;
+      height: 80px;
+      background:
+        radial-gradient(circle, #ff00ff 0%, #00f0ff 70%, transparent 90%),
+        url('https://i.imgur.com/XW7yGJn.png') center/contain no-repeat;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      filter: drop-shadow(0 0 15px #ff00ff);
+    }
 
-        #score {
-            position: absolute;
-            top: 60px;
-            left: 20px;
-            font-size: 1.5rem;
-            color: #00f0ff;
-            text-shadow: 0 0 10px #00f0ff;
-        }
+    .missile {
+      position: absolute;
+      width: 40px;
+      height: 100px;
+      background: url('https://i.imgur.com/E7pYeEr.png') center/contain no-repeat;
+      background-size: contain;
+      transform: rotate(180deg);
+      filter: drop-shadow(0 0 10px #ff3300);
+    }
 
-        #radiation {
-            position: absolute;
-            top: 100px;
-            left: 20px;
-            font-size: 1.5rem;
-            color: #fff000;
-            text-shadow: 0 0 10px #fff000;
-        }
+    .missile::after {
+      content: "";
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 20px;
+      background: radial-gradient(ellipse, #fff000, #ff3300 70%, transparent 90%);
+      animation: flicker 0.1s infinite alternate;
+    }
 
-        #game-over {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2rem;
-            color: #ff00ff;
-            text-shadow: 0 0 15px #ff00ff;
-            display: none;
-            z-index: 10;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 2rem;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 500px;
-        }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
 
-        #game-over code {
-            display: block;
-            margin: 1rem auto;
-            padding: 0.5rem;
-            background: #111;
-            color: #00f0ff;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+    #score {
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      font-size: 1.5rem;
+      color: #00f0ff;
+      text-shadow: 0 0 10px #00f0ff;
+    }
 
-        #restart {
-            margin-top: 2rem;
-            padding: 1rem 2rem;
-            font-family: 'Orbitron', sans-serif;
-            background: #00f0ff;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 0 20px #00f0ff;
-        }
+    #radiation {
+      position: absolute;
+      top: 100px;
+      left: 20px;
+      font-size: 1.5rem;
+      color: #fff000;
+      text-shadow: 0 0 10px #fff000;
+    }
 
-        .explosion {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, #ff3300 0%, #fff000 50%, transparent 70%);
-            border-radius: 50%;
-            opacity: 0;
-            transform: scale(0);
-            animation: explode 1s forwards;
-            z-index: 5;
-        }
+    #game-over {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      color: #ff00ff;
+      text-shadow: 0 0 15px #ff00ff;
+      display: none;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 2rem;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 500px;
+    }
 
-        @keyframes explode {
-            0% { transform: scale(0); opacity: 0.8; }
-            100% { transform: scale(3); opacity: 0; }
-        }
+    #restart {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      font-family: 'Orbitron', sans-serif;
+      background: #00f0ff;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 20px #00f0ff;
+    }
 
-        /* Mobile Footer */
-        #mobile-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(to right, #ff00ff, #00f0ff);
-            padding: 10px;
-            text-align: center;
-            display: none;
-            z-index: 50;
-        }
-        @media (max-width: 768px) {
-            #mobile-footer { display: block; }
-        }
-    </style>
+    .explosion {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, #ff3300 0%, #fff000 50%, transparent 70%);
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0);
+      animation: explode 1s forwards;
+      z-index: 5;
+    }
+
+    @keyframes explode {
+      0% { transform: scale(0); opacity: 0.8; }
+      100% { transform: scale(3); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Contract Address Banner -->
-    <div id="contract-banner">
-        <span>CONTRACT: <code id="contract-address">0xYOUR_CONTRACT_ADDRESS</code></span>
-        <a href="https://pump.fun" target="_blank" class="buy-button">BUY $NEONCIRCUS</a>
+
+  <!-- Contract Address Banner -->
+  <div id="contract-banner">
+    <span>CONTRACT: <code id="contract-address">0xYOUR_CONTRACT_ADDRESS</code></span>
+    <a href="https://pump.fun" target="_blank" class="buy-button">BUY $NEONCIRCUS</a>
+  </div>
+
+  <!-- Game Container -->
+  <div id="game-container">
+    <div id="score">SCORE: 0</div>
+    <div id="radiation">RADIATION: 1x</div>
+    <div id="player"></div>
+
+    <!-- Game Over Screen -->
+    <div id="game-over">
+      MELTDOWN!<br>
+      <small>Fuel your next run with $NEONCIRCUS!</small>
+      <button id="restart">TRY AGAIN</button>
     </div>
+  </div>
 
-    <!-- Game Container -->
-    <div id="game-container">
-        <div id="score">SCORE: 0</div>
-        <div id="radiation">RADIATION: 1x</div>
-        <div id="player"></div>
-        
-        <!-- Game Over Screen -->
-        <div id="game-over">
-            MELTDOWN!<br>
-            <small>Fuel your next run with $NEONCIRCUS:</small>
-            <code id="contract-address-popup">0xYOUR_CONTRACT_ADDRESS</code>
-            <a href="https://pump.fun" target="_blank" class="buy-button" style="display: block; margin: 1rem auto;">BUY NOW</a>
-            <button id="restart">TRY AGAIN</button>
-        </div>
-    </div>
+  <!-- Audio -->
+  <audio id="background-music" loop preload="auto">
+    <source src="https://assets.mixkit.co/music/preview/mixkit-ominous-drums-561.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="explosion-sound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-explosion-impact-1684.mp3" type="audio/mpeg">
+  </audio>
 
-    <!-- Mobile Footer -->
-    <div id="mobile-footer">
-        <div>🚀 <code style="color:#000;">0xYOUR...ADDRESS</code></div>
-        <a href="https://pump.fun" target="_blank" style="color:#000; font-weight:bold;">PUMP IT</a>
-    </div>
+  <script>
+    const player = document.getElementById('player');
+    const gameContainer = document.getElementById('game-container');
+    const scoreDisplay = document.getElementById('score');
+    const radiationDisplay = document.getElementById('radiation');
+    const gameOverDisplay = document.getElementById('game-over');
+    const restartButton = document.getElementById('restart');
+    const bgMusic = document.getElementById('background-music');
+    const explosionSound = document.getElementById('explosion-sound');
+    const contractAddressElement = document.getElementById('contract-address');
 
-    <!-- Audio -->
-    <audio id="background-music" loop>
-        <source src="https://assets.mixkit.co/music/preview/mixkit-ominous-drums-561.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="explosion-sound">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-explosion-impact-1684.mp3" type="audio/mpeg">
-    </audio>
+    let score = 0;
+    let radiation = 1;
+    let gameSpeed = 2;
+    let isGameOver = false;
+    let missiles = [];
+    let playerX = 50;
 
-    <script>
-        // Game Variables
-        const player = document.getElementById('player');
-        const gameContainer = document.getElementById('game-container');
-        const scoreDisplay = document.getElementById('score');
-        const radiationDisplay = document.getElementById('radiation');
-        const gameOverDisplay = document.getElementById('game-over');
-        const restartButton = document.getElementById('restart');
-        const bgMusic = document.getElementById('background-music');
-        const explosionSound = document.getElementById('explosion-sound');
-        const contractAddressElements = document.querySelectorAll('#contract-address, #contract-address-popup');
+    const CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS";
+    contractAddressElement.textContent = CONTRACT_ADDRESS;
 
-        let score = 0;
-        let radiation = 1;
-        let gameSpeed = 2;
-        let isGameOver = false;
-        let missiles = [];
-        let playerX = 50;
+    contractAddressElement.addEventListener('click', () => {
+      navigator.clipboard.writeText(CONTRACT_ADDRESS);
+      const originalText = contractAddressElement.textContent;
+      contractAddressElement.textContent = "COPIED!";
+      setTimeout(() => contractAddressElement.textContent = originalText, 2000);
+    });
 
-        // Set contract address (replace with yours)
-        const CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS";
-        contractAddressElements.forEach(el => {
-            el.textContent = CONTRACT_ADDRESS;
-        });
+    function tryPlayAudio() {
+      bgMusic.play().catch(err => {
+        console.warn("Audio play failed:", err);
+      });
+    }
 
-        // Copy-to-clipboard functionality
-        contractAddressElements.forEach(el => {
-            el.addEventListener('click', () => {
-                navigator.clipboard.writeText(CONTRACT_ADDRESS);
-                const originalText = el.textContent;
-                el.textContent = "COPIED!";
-                setTimeout(() => el.textContent = originalText, 2000);
-            });
-        });
+    document.addEventListener('click', tryPlayAudio, { once: true });
+    document.addEventListener('touchstart', tryPlayAudio, { once: true });
 
-        // Start music on first interaction
-        document.addEventListener('click', () => {
-            bgMusic.play();
-        }, { once: true });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') playerX = Math.max(0, playerX - 5);
+      if (e.key === 'ArrowRight') playerX = Math.min(100, playerX + 5);
+      player.style.left = `${playerX}%`;
+    });
 
-        // Player Movement
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') playerX = Math.max(0, playerX - 5);
-            if (e.key === 'ArrowRight') playerX = Math.min(100, playerX + 5);
-            player.style.left = `${playerX}%`;
-        });
+    gameContainer.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      const touchX = e.touches[0].clientX;
+      playerX = (touchX / window.innerWidth) * 100;
+      player.style.left = `${playerX}%`;
+    });
 
-        // Touch Controls (Mobile)
-        gameContainer.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            const touchX = e.touches[0].clientX;
-            playerX = (touchX / window.innerWidth) * 100;
-            player.style.left = `${playerX}%`;
-        });
+    function update() {
+      if (isGameOver) return;
 
-        // Game Loop
-        function update() {
-            if (isGameOver) return;
+      if (Math.random() < 0.03 * radiation) {
+        spawnMissile();
+      }
 
-            // Spawn Missiles
-            if (Math.random() < 0.03 * radiation) {
-                spawnMissile();
-            }
+      missiles.forEach((missile, index) => {
+        const missileTop = parseFloat(missile.style.top) + gameSpeed;
+        missile.style.top = `${missileTop}px`;
 
-            // Move Missiles
-            missiles.forEach((missile, index) => {
-                const missileTop = parseFloat(missile.style.top) + gameSpeed;
-                missile.style.top = `${missileTop}px`;
-
-                // Collision Check
-                if (
-                    missileTop + 60 > window.innerHeight - 100 &&
-                    missileTop < window.innerHeight - 20 &&
-                    Math.abs(parseFloat(missile.style.left) - playerX) < 5
-                ) {
-                    createExplosion(playerX, window.innerHeight - 80);
-                    explosionSound.play();
-                    endGame();
-                }
-
-                // Remove if off-screen
-                if (missileTop > window.innerHeight) {
-                    missile.remove();
-                    missiles.splice(index, 1);
-                    score += Math.floor(radiation);
-                    scoreDisplay.textContent = `SCORE: ${score}`;
-                }
-            });
-
-            // Increase difficulty
-            if (score % 20 === 0 && score > 0) {
-                radiation = 1 + Math.floor(score / 20) * 0.5;
-                gameSpeed = 2 + Math.floor(score / 20) * 0.5;
-                radiationDisplay.textContent = `RADIATION: ${radiation.toFixed(1)}x`;
-            }
-
-            requestAnimationFrame(update);
+        if (
+          missileTop + 60 > window.innerHeight - 100 &&
+          missileTop < window.innerHeight - 20 &&
+          Math.abs(parseFloat(missile.style.left) - playerX) < 5
+        ) {
+          createExplosion(playerX, window.innerHeight - 80);
+          explosionSound.play();
+          endGame();
         }
 
-        function spawnMissile() {
-            const missile = document.createElement('div');
-            missile.className = 'missile';
-            missile.style.left = `${Math.random() * 90}%`;
-            missile.style.top = '-60px';
-            gameContainer.appendChild(missile);
-            missiles.push(missile);
+        if (missileTop > window.innerHeight) {
+          missile.remove();
+          missiles.splice(index, 1);
+          score += Math.floor(radiation);
+          scoreDisplay.textContent = `SCORE: ${score}`;
         }
+      });
 
-        function createExplosion(x, y) {
-            const explosion = document.createElement('div');
-            explosion.className = 'explosion';
-            explosion.style.left = `${x}%`;
-            explosion.style.top = `${y}px`;
-            gameContainer.appendChild(explosion);
-            setTimeout(() => explosion.remove(), 1000);
-        }
+      if (score % 20 === 0 && score > 0) {
+        radiation = 1 + Math.floor(score / 20) * 0.5;
+        gameSpeed = 2 + Math.floor(score / 20) * 0.5;
+        radiationDisplay.textContent = `RADIATION: ${radiation.toFixed(1)}x`;
+      }
 
-        function endGame() {
-            isGameOver = true;
-            gameOverDisplay.style.display = 'block';
-            bgMusic.pause();
-        }
+      requestAnimationFrame(update);
+    }
 
-        restartButton.addEventListener('click', () => {
-            missiles.forEach(missile => missile.remove());
-            missiles = [];
-            score = 0;
-            radiation = 1;
-            gameSpeed = 2;
-            isGameOver = false;
-            playerX = 50;
-            player.style.left = '50%';
-            gameOverDisplay.style.display = 'none';
-            scoreDisplay.textContent = 'SCORE: 0';
-            radiationDisplay.textContent = 'RADIATION: 1x';
-            bgMusic.currentTime = 0;
-            bgMusic.play();
-            update();
-        });
+    function spawnMissile() {
+      const missile = document.createElement('div');
+      missile.className = 'missile';
+      missile.style.left = `${Math.random() * 90}%`;
+      missile.style.top = '-60px';
+      gameContainer.appendChild(missile);
+      missiles.push(missile);
+    }
 
-        // Start Game
-        update();
-    </script>
+    function createExplosion(x, y) {
+      const explosion = document.createElement('div');
+      explosion.className = 'explosion';
+      explosion.style.left = `${x}%`;
+      explosion.style.top = `${y}px`;
+      gameContainer.appendChild(explosion);
+      setTimeout(() => explosion.remove(), 1000);
+    }
+
+    function endGame() {
+      isGameOver = true;
+      gameOverDisplay.style.display = 'block';
+      bgMusic.pause();
+    }
+
+    restartButton.addEventListener('click', () => {
+      missiles.forEach(missile => missile.remove());
+      missiles = [];
+      score = 0;
+      radiation = 1;
+      gameSpeed = 2;
+      isGameOver = false;
+      playerX = 50;
+      player.style.left = '50%';
+      gameOverDisplay.style.display = 'none';
+      scoreDisplay.textContent = 'SCORE: 0';
+      radiationDisplay.textContent = 'RADIATION: 1x';
+      bgMusic.currentTime = 0;
+      bgMusic.play();
+      update();
+    });
+
+    update();
+  </script>
 </body>
 </html>
