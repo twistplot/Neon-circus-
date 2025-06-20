@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NEON CYBER CIRCUS NUKE: NUCLEAR DODGE ☢️</title>
+  <title>NEON CIRCUS NUKE ☢️</title>
   <style>
     body {
       margin: 0;
@@ -167,8 +167,8 @@
 
   <!-- Contract Address Banner -->
   <div id="contract-banner">
-    <span>CONTRACT: <code id="contract-address">0xYOUR_CONTRACT_ADDRESS</code></span>
-    <a href="https://pump.fun" target="_blank" class="buy-button">BUY $NEONCIRCUS</a>
+    <span>CONTRACT: <code id="contract-address">nryEYQ9o5CwCes4qJtyGDPDKo7ZvXFVkegQCZ7Npump</code></span>
+    <a href="https://pump.fun" target="_blank" class="buy-button">BUY $NEONNUKE</a>
   </div>
 
   <!-- Game Container -->
@@ -180,7 +180,7 @@
     <!-- Game Over Screen -->
     <div id="game-over">
       MELTDOWN!<br>
-      <small>Fuel your next run with $NEONCIRCUS!</small>
+      <small>Fuel your next run with $NEONNUKE!</small>
       <button id="restart">TRY AGAIN</button>
     </div>
   </div>
@@ -204,14 +204,7 @@
     const explosionSound = document.getElementById('explosion-sound');
     const contractAddressElement = document.getElementById('contract-address');
 
-    let score = 0;
-    let radiation = 1;
-    let gameSpeed = 2;
-    let isGameOver = false;
-    let missiles = [];
-    let playerX = 50;
-
-    const CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS";
+    const CONTRACT_ADDRESS = "nryEYQ9o5CwCes4qJtyGDPDKo7ZvXFVkegQCZ7Npump";
     contractAddressElement.textContent = CONTRACT_ADDRESS;
 
     contractAddressElement.addEventListener('click', () => {
@@ -222,13 +215,18 @@
     });
 
     function tryPlayAudio() {
-      bgMusic.play().catch(err => {
-        console.warn("Audio play failed:", err);
-      });
+      bgMusic.play().catch(err => console.warn("Autoplay blocked"));
     }
 
     document.addEventListener('click', tryPlayAudio, { once: true });
     document.addEventListener('touchstart', tryPlayAudio, { once: true });
+
+    let score = 0;
+    let radiation = 1;
+    let gameSpeed = 2;
+    let isGameOver = false;
+    let missiles = [];
+    let playerX = 50;
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') playerX = Math.max(0, playerX - 5);
